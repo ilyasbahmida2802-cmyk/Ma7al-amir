@@ -32,7 +32,6 @@ h2 { color:#ffd700; margin-bottom:15px; text-align:center; }
 .btn-share { background: linear-gradient(135deg, #6a1b9a, #4a148c); color:#fff; }
 .btn-gift { background: linear-gradient(135deg, #e91e63, #ad1457); color:#fff; }
 .btn-whatsapp { background: linear-gradient(135deg, #25d366, #128c7e); color:#fff; }
-.btn-cart { background: linear-gradient(135deg, #00bcd4, #0097a7); color:#fff; }
 .btn-add-cart { background: linear-gradient(135deg, #4caf50, #2e7d32); color:#fff; padding:10px; font-size:15px; margin-top:10px; }
 input, select, textarea {
   width:100%; padding:12px; margin:8px 0; border-radius:8px;
@@ -164,12 +163,53 @@ label { display:block; margin-top:10px; color:#ffd700; font-weight:bold; }
 .size-option .size-price { font-size:14px; color:#ffd700; }
 .size-option.selected .size-price { color:#1a0033; }
 
-.price-display {
+.cart-summary {
   background: rgba(255,215,0,0.15); border:2px solid #ffd700;
   border-radius:10px; padding:15px; margin:15px 0; text-align:center;
 }
-.price-display .price-amount {
-  font-size:28px; font-weight:bold; color:#ffd700; margin:5px 0;
+.cart-summary .total {
+  font-size:24px; font-weight:bold; color:#ffd700; margin:8px 0;
+}
+
+.in-cart-badge {
+  position:absolute; top:10px; left:10px;
+  background:#4caf50; color:#fff;
+  padding:4px 10px; border-radius:15px;
+  font-size:11px; font-weight:bold;
+}
+
+.cart-float {
+  position:fixed; bottom:20px; right:20px;
+  background: linear-gradient(135deg, #00bcd4, #0097a7);
+  color:#fff; padding:12px 20px; border-radius:30px;
+  box-shadow:0 5px 20px rgba(0,0,0,0.4);
+  cursor:pointer; z-index:500; font-weight:bold;
+  display:none; align-items:center; gap:8px;
+}
+.cart-float.show { display:flex; }
+.cart-float .cart-count {
+  background:#fff; color:#0097a7;
+  width:24px; height:24px; border-radius:50%;
+  display:flex; align-items:center; justify-content:center;
+  font-size:14px; font-weight:bold;
+}
+
+.cart-item {
+  background: rgba(255,215,0,0.1); border:1px solid rgba(255,215,0,0.3);
+  border-radius:10px; padding:12px; margin:10px 0;
+  display:flex; gap:10px; align-items:center;
+}
+.cart-item img {
+  width:50px; height:50px; object-fit:cover; border-radius:6px;
+  border:1px solid #ffd700;
+}
+.cart-item-info { flex:1; text-align:right; }
+.cart-item-info h4 { color:#ffd700; font-size:14px; margin-bottom:4px; }
+.cart-item-info p { font-size:12px; margin:2px 0; }
+.cart-item-remove {
+  background:#c62828; color:#fff; border:none;
+  width:30px; height:30px; border-radius:50%;
+  cursor:pointer; font-size:16px;
 }
 
 .invoice-preview {
@@ -196,57 +236,165 @@ label { display:block; margin-top:10px; color:#ffd700; font-weight:bold; }
   font-weight:bold; margin:0 3px;
 }
 
-/* شريط السلة العائم */
-.cart-float {
-  position:fixed; bottom:20px; right:20px;
-  background: linear-gradient(135deg, #00bcd4, #0097a7);
-  color:#fff; padding:12px 20px; border-radius:30px;
-  box-shadow:0 5px 20px rgba(0,0,0,0.4);
-  cursor:pointer; z-index:500; font-weight:bold;
-  display:none; align-items:center; gap:8px;
-  animation:slideUp 0.3s;
-}
-.cart-float.show { display:flex; }
-.cart-float .cart-count {
-  background:#fff; color:#0097a7;
-  width:24px; height:24px; border-radius:50%;
-  display:flex; align-items:center; justify-content:center;
-  font-size:14px; font-weight:bold;
-}
-@keyframes slideUp { from{transform:translateY(100px); opacity:0;} to{transform:translateY(0); opacity:1;} }
-
-/* عناصر السلة */
-.cart-item {
-  background: rgba(255,215,0,0.1); border:1px solid rgba(255,215,0,0.3);
-  border-radius:10px; padding:12px; margin:10px 0;
-  display:flex; gap:10px; align-items:center;
-}
-.cart-item img {
-  width:50px; height:50px; object-fit:cover; border-radius:6px;
-  border:1px solid #ffd700;
-}
-.cart-item-info { flex:1; text-align:right; }
-.cart-item-info h4 { color:#ffd700; font-size:14px; margin-bottom:4px; }
-.cart-item-info p { font-size:12px; margin:2px 0; }
-.cart-item-remove {
-  background:#c62828; color:#fff; border:none;
-  width:30px; height:30px; border-radius:50%;
-  cursor:pointer; font-size:16px;
+.gender-filter-info {
+  background: rgba(255,215,0,0.15); border:1px solid #ffd700;
+  border-radius:10px; padding:10px; margin-bottom:15px;
+  text-align:center; font-size:13px;
 }
 
-.cart-summary {
-  background: rgba(255,215,0,0.15); border:2px solid #ffd700;
-  border-radius:10px; padding:15px; margin:15px 0; text-align:center;
+.admin-section {
+  background: rgba(255,255,255,0.08);
+  border:1px solid rgba(255,215,0,0.3);
+  border-radius:12px;
+  margin:12px 0;
+  overflow:hidden;
+  transition:all 0.3s;
 }
-.cart-summary .total {
-  font-size:24px; font-weight:bold; color:#ffd700; margin:8px 0;
+.admin-section:hover {
+  border-color:rgba(255,215,0,0.6);
+}
+.section-header {
+  padding:18px 20px;
+  background: linear-gradient(135deg, rgba(255,215,0,0.15), rgba(255,140,0,0.1));
+  cursor:pointer;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  transition:0.3s;
+  user-select:none;
+}
+.section-header:hover {
+  background: linear-gradient(135deg, rgba(255,215,0,0.25), rgba(255,140,0,0.2));
+}
+.section-header.active {
+  background: linear-gradient(135deg, rgba(255,215,0,0.3), rgba(255,140,0,0.25));
+  border-bottom:1px solid rgba(255,215,0,0.3);
+}
+.section-title {
+  display:flex;
+  align-items:center;
+  gap:12px;
+  font-size:17px;
+  font-weight:bold;
+  color:#ffd700;
+}
+.section-icon {
+  font-size:24px;
+  width:40px;
+  height:40px;
+  background: rgba(255,215,0,0.2);
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+.section-arrow {
+  font-size:20px;
+  color:#ffd700;
+  transition:transform 0.3s;
+}
+.section-header.active .section-arrow {
+  transform: rotate(180deg);
+}
+.section-body {
+  max-height:0;
+  overflow:hidden;
+  transition:max-height 0.4s ease-out;
+}
+.section-body.open {
+  max-height:5000px;
+  transition:max-height 0.6s ease-in;
+}
+.section-content {
+  padding:20px;
+}
+.section-badge {
+  background:#e91e63;
+  color:#fff;
+  padding:2px 8px;
+  border-radius:10px;
+  font-size:11px;
+  margin-right:8px;
 }
 
-.in-cart-badge {
-  position:absolute; top:10px; left:10px;
-  background:#4caf50; color:#fff;
-  padding:4px 10px; border-radius:15px;
-  font-size:11px; font-weight:bold;
+/* ====== حقل البحث ====== */
+.search-box {
+  position:relative;
+  margin-bottom:15px;
+}
+.search-box input {
+  padding-right:45px;
+  padding-left:40px;
+  background: rgba(255,255,255,0.12);
+  border:2px solid rgba(255,215,0,0.3);
+  transition:0.3s;
+}
+.search-box input:focus {
+  outline:none;
+  border-color:#ffd700;
+  background: rgba(255,255,255,0.18);
+  box-shadow:0 0 10px rgba(255,215,0,0.3);
+}
+.search-icon {
+  position:absolute;
+  right:15px;
+  top:50%;
+  transform:translateY(-50%);
+  font-size:18px;
+  color:#ffd700;
+  pointer-events:none;
+}
+.search-clear {
+  position:absolute;
+  left:10px;
+  top:50%;
+  transform:translateY(-50%);
+  background:rgba(198,40,40,0.8);
+  color:#fff;
+  border:none;
+  width:26px;
+  height:26px;
+  border-radius:50%;
+  cursor:pointer;
+  font-size:14px;
+  display:none;
+  align-items:center;
+  justify-content:center;
+  transition:0.2s;
+}
+.search-clear:hover {
+  background:#c62828;
+  transform:translateY(-50%) scale(1.1);
+}
+.search-clear.show {
+  display:flex;
+}
+.search-info {
+  display:none;
+  background: rgba(255,215,0,0.15);
+  border:1px solid rgba(255,215,0,0.3);
+  border-radius:8px;
+  padding:8px 12px;
+  margin-bottom:10px;
+  font-size:13px;
+  text-align:center;
+  color:#ffd700;
+}
+.search-info.show {
+  display:block;
+}
+.search-info strong {
+  color:#fff;
+}
+.no-results {
+  text-align:center;
+  padding:30px 15px;
+  color:rgba(255,255,255,0.7);
+}
+.no-results .emoji {
+  font-size:48px;
+  display:block;
+  margin-bottom:10px;
 }
 </style>
 </head>
@@ -255,7 +403,6 @@ label { display:block; margin-top:10px; color:#ffd700; font-weight:bold; }
 
 <button class="secret-add" onclick="tryAdminAccess()" title="+">+</button>
 
-<!-- شريط السلة العائم -->
 <div class="cart-float" id="cartFloat" onclick="showCart()">
   🛒 السلة <span class="cart-count" id="cartCount">0</span>
 </div>
@@ -281,127 +428,203 @@ label { display:block; margin-top:10px; color:#ffd700; font-weight:bold; }
   <h1>🔐 دخول لوحة المحل</h1>
   <div class="card">
     <h2>أدخل كلمة المرور</h2>
-    <input type="password" id="adminPassword" placeholder="كلمة المرور" onkeypress="if(event.key==='Enter')checkPassword()">
+    <input type="password" id="adminPassword" placeholder="••••••••" onkeypress="if(event.key==='Enter')checkPassword()">
     <button class="btn" onclick="checkPassword()">🔓 دخول</button>
     <button class="btn btn-back" onclick="showPage('home')">🔙 رجوع</button>
-    <p style="text-align:center; margin-top:15px; font-size:12px; color:rgba(255,255,255,0.5);">
-      كلمة المرور الافتراضية: admin123
-    </p>
   </div>
 </div>
 
 <div id="admin" class="hidden">
   <h1>🔐 لوحة المحل</h1>
   
-  <div class="card">
-    <h2>➕ إضافة عطر جديد</h2>
-    <label>اسم العطر:</label>
-    <input type="text" id="pName" placeholder="مثال: عود ملكي">
-    <label>صورة العطر:</label>
-    <input type="file" id="pImage" accept="image/*" onchange="previewImage(event)">
-    <div class="img-preview" id="imgPreview">لا توجد صورة</div>
-    <label>النوع:</label>
-    <select id="pType">
-      <option value="زيتي">زيتي</option>
-      <option value="أصلي">أصلي</option>
-      <option value="خليط">خليط</option>
-    </select>
-    <label>الجنس المناسب:</label>
-    <select id="pGender">
-      <option value="رجالي">رجالي</option>
-      <option value="نسائي">نسائي</option>
-      <option value="يونيسكس">للجنسين</option>
-    </select>
-    <label>الفصل المناسب:</label>
-    <select id="pSeason">
-      <option value="الشتاء">الشتاء</option>
-      <option value="الصيف">الصيف</option>
-      <option value="الربيع">الربيع</option>
-      <option value="الخريف">الخريف</option>
-      <option value="كل الفصول">كل الفصول</option>
-    </select>
-    <label>الفئة العمرية:</label>
-    <select id="pAge">
-      <option value="شباب">شباب (18-30)</option>
-      <option value="متوسط">متوسط (30-50)</option>
-      <option value="كبار">كبار (50+)</option>
-      <option value="الكل">الكل</option>
-    </select>
-    <label>المناسبة:</label>
-    <select id="pOccasion">
-      <option value="يومي">استخدام يومي</option>
-      <option value="عمل">العمل</option>
-      <option value="سهرة">سهرة/مناسبة خاصة</option>
-      <option value="رياضة">الرياضة</option>
-      <option value="الكل">كل المناسبات</option>
-    </select>
-    
-    <h3 style="color:#ffd700; margin-top:20px; text-align:center;">💰 الأسعار حسب الحجم</h3>
-    <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:10px;">
-      <div>
-        <label>3 مل:</label>
-        <input type="number" id="price3ml" placeholder="0" min="0">
+  <div class="card" style="padding:15px;">
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; text-align:center;">
+      <div style="background:rgba(255,215,0,0.15); padding:10px; border-radius:10px;">
+        <div style="font-size:24px; font-weight:bold; color:#ffd700;" id="countDisplay">0</div>
+        <div style="font-size:12px;">عطر</div>
       </div>
-      <div>
-        <label>6 مل:</label>
-        <input type="number" id="price6ml" placeholder="0" min="0">
-      </div>
-      <div>
-        <label>12 مل:</label>
-        <input type="number" id="price12ml" placeholder="0" min="0">
-      </div>
-      <div>
-        <label>25 مل:</label>
-        <input type="number" id="price25ml" placeholder="0" min="0">
+      <div style="background:rgba(255,215,0,0.15); padding:10px; border-radius:10px;">
+        <div style="font-size:24px; font-weight:bold; color:#ffd700;" id="custCountDisplay">0</div>
+        <div style="font-size:12px;">زبون</div>
       </div>
     </div>
-    
-    <label>الوصف:</label>
-    <textarea id="pDesc" rows="3" placeholder="وصف مختصر للعطر..."></textarea>
-    <button class="btn" onclick="addPerfume()">💾 حفظ العطر</button>
   </div>
 
-  <div class="card">
-    <h2>👥 إدارة الزبائن والجوائز</h2>
-    <p style="text-align:center; font-size:13px; margin-bottom:10px; color:rgba(255,255,255,0.7);">
-      كل عطر في السلة = <strong style="color:#ffd700;">10 نقاط</strong> | 
-      50 نقطة = 🎁 مؤهل للجائزة
-    </p>
-    <div id="customersList"></div>
+  <!-- قسم 1: إضافة عطر -->
+  <div class="admin-section">
+    <div class="section-header" onclick="toggleSection('sec1')">
+      <div class="section-title">
+        <div class="section-icon">➕</div>
+        <span>إضافة عطر جديد</span>
+      </div>
+      <span class="section-arrow">▼</span>
+    </div>
+    <div class="section-body" id="sec1">
+      <div class="section-content">
+        <label>اسم العطر:</label>
+        <input type="text" id="pName" placeholder="مثال: عود ملكي">
+        <label>صورة العطر:</label>
+        <input type="file" id="pImage" accept="image/*" onchange="previewImage(event)">
+        <div class="img-preview" id="imgPreview">لا توجد صورة</div>
+        <label>النوع:</label>
+        <select id="pType">
+          <option value="زيتي">زيتي</option>
+          <option value="أصلي">أصلي</option>
+          <option value="خليط">خليط</option>
+        </select>
+        <label>الجنس المناسب:</label>
+        <select id="pGender">
+          <option value="رجالي">رجالي</option>
+          <option value="نسائي">نسائي</option>
+          <option value="يونيسكس">للجنسين</option>
+        </select>
+        <label>الفصل المناسب:</label>
+        <select id="pSeason">
+          <option value="الشتاء">الشتاء</option>
+          <option value="الصيف">الصيف</option>
+          <option value="الربيع">الربيع</option>
+          <option value="الخريف">الخريف</option>
+          <option value="كل الفصول">كل الفصول</option>
+        </select>
+        <label>الفئة العمرية:</label>
+        <select id="pAge">
+          <option value="شباب">شباب (18-30)</option>
+          <option value="متوسط">متوسط (30-50)</option>
+          <option value="كبار">كبار (50+)</option>
+          <option value="الكل">الكل</option>
+        </select>
+        <label>المناسبة:</label>
+        <select id="pOccasion">
+          <option value="يومي">استخدام يومي</option>
+          <option value="عمل">العمل</option>
+          <option value="سهرة">سهرة/مناسبة خاصة</option>
+          <option value="رياضة">الرياضة</option>
+          <option value="الكل">كل المناسبات</option>
+        </select>
+        
+        <h3 style="color:#ffd700; margin-top:20px; text-align:center;">💰 الأسعار حسب الحجم</h3>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:10px;">
+          <div>
+            <label>3 مل:</label>
+            <input type="number" id="price3ml" placeholder="0" min="0">
+          </div>
+          <div>
+            <label>6 مل:</label>
+            <input type="number" id="price6ml" placeholder="0" min="0">
+          </div>
+          <div>
+            <label>12 مل:</label>
+            <input type="number" id="price12ml" placeholder="0" min="0">
+          </div>
+          <div>
+            <label>25 مل:</label>
+            <input type="number" id="price25ml" placeholder="0" min="0">
+          </div>
+        </div>
+        
+        <label>الوصف:</label>
+        <textarea id="pDesc" rows="3" placeholder="وصف مختصر للعطر..."></textarea>
+        <button class="btn" onclick="addPerfume()">💾 حفظ العطر</button>
+      </div>
+    </div>
   </div>
 
-  <div class="card">
-    <h2>⚙️ الإعدادات</h2>
-    <label>اسم المحل (يظهر في الفاتورة):</label>
-    <input type="text" id="shopName" placeholder="محل العطور الزيتية">
-    <button class="btn" onclick="saveShopName()">💾 حفظ اسم المحل</button>
-    <label>تغيير كلمة المرور:</label>
-    <input type="password" id="newPassword" placeholder="كلمة المرور الجديدة">
-    <button class="btn" onclick="changePassword()">🔑 تغيير كلمة المرور</button>
-    <label>نقاط الجائزة (افتراضي: 50):</label>
-    <input type="number" id="giftThreshold" min="10" value="50">
-    <button class="btn" onclick="saveGiftThreshold()">💾 حفظ الحد</button>
+  <!-- قسم 2: قائمة العطور -->
+  <div class="admin-section">
+    <div class="section-header" onclick="toggleSection('sec2')">
+      <div class="section-title">
+        <div class="section-icon">📋</div>
+        <span>قائمة العطور</span>
+        <span class="section-badge" id="perfumeBadge">0</span>
+      </div>
+      <span class="section-arrow">▼</span>
+    </div>
+    <div class="section-body" id="sec2">
+      <div class="section-content">
+        <div id="perfumeList"></div>
+      </div>
+    </div>
   </div>
 
-  <div class="card">
-    <h2>💾 إدارة البيانات</h2>
-    <p style="text-align:center; margin-bottom:15px; font-size:14px;">
-      عدد العطور: <strong id="countDisplay">0</strong> | 
-      عدد الزبائن: <strong id="custCountDisplay">0</strong>
-    </p>
-    <button class="btn btn-export" onclick="exportData()">📤 تصدير البيانات</button>
-    <button class="btn btn-import" onclick="document.getElementById('importFile').click()">📥 استيراد البيانات</button>
-    <input type="file" id="importFile" accept=".json" style="display:none" onchange="importData(event)">
-    <button class="btn btn-share" onclick="shareData()">📲 مشاركة عبر واتساب</button>
-    <button class="btn btn-del" style="width:100%; margin-top:15px;" onclick="clearAllData()">🗑️ حذف كل البيانات</button>
+  <!-- قسم 3: إدارة الزبائن مع البحث -->
+  <div class="admin-section">
+    <div class="section-header" onclick="toggleSection('sec3')">
+      <div class="section-title">
+        <div class="section-icon">👥</div>
+        <span>إدارة الزبائن والجوائز</span>
+        <span class="section-badge" id="customerBadge">0</span>
+      </div>
+      <span class="section-arrow">▼</span>
+    </div>
+    <div class="section-body" id="sec3">
+      <div class="section-content">
+        <p style="text-align:center; font-size:13px; margin-bottom:10px; color:rgba(255,255,255,0.7);">
+          كل عطر في السلة = <strong style="color:#ffd700;">10 نقاط</strong> | 
+          <span id="thresholdDisplay">50</span> نقطة = 🎁 مؤهل للجائزة
+        </p>
+        
+        <!-- ✅ حقل البحث الجديد -->
+        <div class="search-box">
+          <span class="search-icon">🔍</span>
+          <input type="text" id="customerSearch" placeholder="ابحث بالاسم أو رقم الهاتف..." oninput="handleSearch()">
+          <button class="search-clear" id="searchClear" onclick="clearSearch()">✕</button>
+        </div>
+        
+        <!-- معلومات نتائج البحث -->
+        <div class="search-info" id="searchInfo"></div>
+        
+        <div id="customersList"></div>
+      </div>
+    </div>
   </div>
 
-  <div class="card">
-    <h2>📋 قائمة العطور</h2>
-    <div id="perfumeList"></div>
+  <!-- قسم 4: الإعدادات -->
+  <div class="admin-section">
+    <div class="section-header" onclick="toggleSection('sec4')">
+      <div class="section-title">
+        <div class="section-icon">⚙️</div>
+        <span>الإعدادات</span>
+      </div>
+      <span class="section-arrow">▼</span>
+    </div>
+    <div class="section-body" id="sec4">
+      <div class="section-content">
+        <label>اسم المحل (يظهر في الفاتورة):</label>
+        <input type="text" id="shopName" placeholder="محل العطور الزيتية">
+        <button class="btn" onclick="saveShopName()">💾 حفظ اسم المحل</button>
+        
+        <label>تغيير كلمة المرور:</label>
+        <input type="password" id="newPassword" placeholder="كلمة المرور الجديدة">
+        <button class="btn" onclick="changePassword()">🔑 تغيير كلمة المرور</button>
+        
+        <label>نقاط الجائزة:</label>
+        <input type="number" id="giftThreshold" min="10" value="50">
+        <button class="btn" onclick="saveGiftThreshold()">💾 حفظ الحد</button>
+      </div>
+    </div>
   </div>
 
-  <button class="btn btn-back" onclick="showPage('home')">🔙 رجوع</button>
+  <!-- قسم 5: إدارة البيانات -->
+  <div class="admin-section">
+    <div class="section-header" onclick="toggleSection('sec5')">
+      <div class="section-title">
+        <div class="section-icon">💾</div>
+        <span>إدارة البيانات</span>
+      </div>
+      <span class="section-arrow">▼</span>
+    </div>
+    <div class="section-body" id="sec5">
+      <div class="section-content">
+        <button class="btn btn-export" onclick="exportData()">📤 تصدير البيانات</button>
+        <button class="btn btn-import" onclick="document.getElementById('importFile').click()">📥 استيراد البيانات</button>
+        <input type="file" id="importFile" accept=".json" style="display:none" onchange="importData(event)">
+        <button class="btn btn-share" onclick="shareData()">📲 مشاركة عبر واتساب</button>
+        <button class="btn btn-del" style="width:100%; margin-top:15px;" onclick="clearAllData()">🗑️ حذف كل البيانات</button>
+      </div>
+    </div>
+  </div>
+
+  <button class="btn btn-back" onclick="logoutAdmin()">🚪 تسجيل الخروج</button>
 </div>
 
 <div id="quiz" class="hidden">
@@ -416,13 +639,13 @@ label { display:block; margin-top:10px; color:#ffd700; font-weight:bold; }
   <h1>✨ عطورك المقترحة ✨</h1>
   <div class="card">
     <div id="customerWelcome"></div>
+    <div id="genderFilterInfo"></div>
     <p style="text-align:center; margin-bottom:15px;">اختر العطر (أو العطور) التي تريد شراءها ✨</p>
     <p style="text-align:center; font-size:13px; color:rgba(255,255,255,0.7); margin-bottom:15px;">
       💡 يمكنك إضافة عطر واحد أو عدة عطور إلى سلتك
     </p>
     <div id="resultsList"></div>
     
-    <!-- ملخص السلة -->
     <div id="cartSummary" style="display:none;">
       <div class="cart-summary">
         <div>🛒 عدد العطور في السلة: <strong id="cartItemsCount">0</strong></div>
@@ -439,7 +662,6 @@ label { display:block; margin-top:10px; color:#ffd700; font-weight:bold; }
 
 </div>
 
-<!-- نافذة السلة -->
 <div class="modal" id="cartModal">
   <div class="modal-content">
     <h3>🛒 سلة المشتريات</h3>
@@ -474,11 +696,19 @@ let giftThreshold = parseInt(localStorage.getItem('giftThreshold') || '50');
 let shopName = localStorage.getItem('shopName') || 'محل العطور الزيتية';
 let isAdminLoggedIn = false;
 
-// ===== السلة =====
-let cart = []; // [{perfumeId, size, price, perfumeName, image}]
-let selectedSizes = {}; // {perfumeId: {size, price}} - لحفظ اختيار الحجم لكل عطر
+let cart = [];
+let selectedSizes = {};
+let searchQuery = ''; // ✅ متغير البحث
 
-// ===== تطبيع الرقم الجزائري =====
+// ====== نظام الأقسام ======
+function toggleSection(sectionId) {
+  const body = document.getElementById(sectionId);
+  const header = body.previousElementSibling;
+  body.classList.toggle('open');
+  header.classList.toggle('active');
+}
+
+// ====== تطبيع الرقم الجزائري =====
 function normalizeAlgerianPhone(phone) {
   if (!phone) return '';
   let cleaned = phone.replace(/[^\d]/g, '');
@@ -513,9 +743,7 @@ function showPage(id) {
     renderCustomers();
     document.getElementById('giftThreshold').value = giftThreshold;
     document.getElementById('shopName').value = shopName;
-  }
-  if (id !== 'results') {
-    updateCartFloat();
+    document.getElementById('thresholdDisplay').textContent = giftThreshold;
   }
 }
 
@@ -566,6 +794,17 @@ function checkPassword() {
   }
 }
 
+function logoutAdmin() {
+  showConfirm('تسجيل الخروج', 'هل تريد تسجيل الخروج من لوحة المحل؟', [
+    { text: '❌ إلغاء', class: 'btn-back' },
+    { text: '🚪 خروج', class: 'btn-del', action: () => {
+      isAdminLoggedIn = false;
+      showPage('home');
+      showToast('✅ تم تسجيل الخروج');
+    }}
+  ]);
+}
+
 function changePassword() {
   const newPwd = document.getElementById('newPassword').value.trim();
   if (newPwd.length < 4) { showToast('⚠️ كلمة المرور يجب أن تكون 4 أحرف على الأقل'); return; }
@@ -593,6 +832,7 @@ function saveGiftThreshold() {
   if (val < 10) { showToast('⚠️ الحد الأدنى 10 نقاط'); return; }
   giftThreshold = val;
   localStorage.setItem('giftThreshold', giftThreshold);
+  document.getElementById('thresholdDisplay').textContent = giftThreshold;
   showToast('✅ تم حفظ الحد');
   renderCustomers();
 }
@@ -681,6 +921,7 @@ function deletePerfume(id) {
 
 function renderPerfumes() {
   document.getElementById('countDisplay').textContent = perfumes.length;
+  document.getElementById('perfumeBadge').textContent = perfumes.length;
   const list = document.getElementById('perfumeList');
   if (perfumes.length === 0) {
     list.innerHTML = '<div class="empty">لا توجد عطور مضافة بعد</div>';
@@ -804,24 +1045,97 @@ function deleteCustomer(customerId) {
   ]);
 }
 
+// ====== ✅ دوال البحث الجديدة ======
+function handleSearch() {
+  const input = document.getElementById('customerSearch');
+  const clearBtn = document.getElementById('searchClear');
+  searchQuery = input.value.trim();
+  
+  // إظهار/إخفاء زر المسح
+  if (searchQuery.length > 0) {
+    clearBtn.classList.add('show');
+  } else {
+    clearBtn.classList.remove('show');
+  }
+  
+  renderCustomers();
+}
+
+function clearSearch() {
+  document.getElementById('customerSearch').value = '';
+  document.getElementById('searchClear').classList.remove('show');
+  document.getElementById('searchInfo').classList.remove('show');
+  searchQuery = '';
+  renderCustomers();
+}
+
+function filterCustomers(list, query) {
+  if (!query) return list;
+  const q = query.toLowerCase();
+  // البحث في الاسم أو رقم الهاتف (بصيغته المحلية والدولية)
+  return list.filter(c => {
+    const nameMatch = c.name.toLowerCase().includes(q);
+    const phoneMatch = c.phone && c.phone.includes(q.replace(/[^\d]/g, ''));
+    // أيضاً البحث بالصيغة المحلية (055...)
+    const localPhone = c.phone && c.phone.startsWith('213') 
+      ? '0' + c.phone.substring(3) 
+      : '';
+    const localPhoneMatch = localPhone && localPhone.includes(q.replace(/[^\d]/g, ''));
+    return nameMatch || phoneMatch || localPhoneMatch;
+  });
+}
+
 function renderCustomers() {
   document.getElementById('custCountDisplay').textContent = customers.length;
+  document.getElementById('customerBadge').textContent = customers.length;
   const list = document.getElementById('customersList');
+  const searchInfo = document.getElementById('searchInfo');
+  
   if (customers.length === 0) {
+    searchInfo.classList.remove('show');
     list.innerHTML = '<div class="empty">لا يوجد زبائن بعد</div>';
     return;
   }
-  const sorted = [...customers].sort((a,b) => b.points - a.points);
+  
+  // ✅ تطبيق البحث
+  const filtered = filterCustomers(customers, searchQuery);
+  
+  // عرض معلومات البحث
+  if (searchQuery) {
+    searchInfo.classList.add('show');
+    if (filtered.length === 0) {
+      searchInfo.innerHTML = `🔍 لا توجد نتائج لـ "<strong>${searchQuery}</strong>"`;
+    } else {
+      searchInfo.innerHTML = `🔍 تم العثور على <strong>${filtered.length}</strong> من أصل <strong>${customers.length}</strong> زبون`;
+    }
+  } else {
+    searchInfo.classList.remove('show');
+  }
+  
+  // ✅ عرض "لا توجد نتائج"
+  if (filtered.length === 0 && searchQuery) {
+    list.innerHTML = `
+      <div class="no-results">
+        <span class="emoji">🔍</span>
+        <p>لا يوجد زبون يطابق بحثك</p>
+        <p style="font-size:13px; margin-top:8px;">جرب البحث باسم آخر أو رقم هاتف مختلف</p>
+        <button class="btn btn-back" style="margin-top:15px; max-width:200px; margin-right:auto; margin-left:auto;" onclick="clearSearch()">🔄 مسح البحث</button>
+      </div>
+    `;
+    return;
+  }
+  
+  const sorted = [...filtered].sort((a,b) => b.points - a.points);
   list.innerHTML = sorted.map(c => {
     const percent = Math.min(100, (c.points / giftThreshold) * 100);
     const eligible = c.points >= giftThreshold;
     return `
       <div class="customer-item" style="flex-direction:column;">
         <div style="display:flex; justify-content:space-between; align-items:center; width:100%;">
-          <h3 style="margin:0;">👤 ${c.name}</h3>
+          <h3 style="margin:0;">👤 ${highlightText(c.name, searchQuery)}</h3>
           ${eligible ? '<span class="gift-badge">🎁 مؤهل للجائزة!</span>' : ''}
         </div>
-        ${c.phone ? `<p style="margin-top:8px; direction:ltr; text-align:right;">📱 <span class="flag-badge">🇩🇿</span> ${formatPhoneForDisplay(c.phone)}</p>` : '<p style="margin-top:8px; color:rgba(255,255,255,0.5);">📱 رقم الهاتف غير متوفر</p>'}
+        ${c.phone ? `<p style="margin-top:8px; direction:ltr; text-align:right;">📱 <span class="flag-badge">🇩🇿</span> ${highlightText(formatPhoneForDisplay(c.phone), searchQuery)}</p>` : '<p style="margin-top:8px; color:rgba(255,255,255,0.5);">📱 رقم الهاتف غير متوفر</p>'}
         <p>🛒 عدد المشتريات: <strong>${c.purchases}</strong></p>
         <p>⭐ النقاط: <strong style="color:#ffd700;">${c.points}</strong> / ${giftThreshold}</p>
         <div class="points-bar">
@@ -838,6 +1152,13 @@ function renderCustomers() {
   }).join('');
 }
 
+// ✅ تمييز النص المطابق في البحث
+function highlightText(text, query) {
+  if (!query || !text) return text;
+  const regex = new RegExp(`(${query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi');
+  return text.replace(regex, '<mark style="background:#ffd700; color:#1a0033; padding:0 3px; border-radius:3px;">$1</mark>');
+}
+
 function sendWhatsApp(customerId) {
   const c = customers.find(c => c.id === customerId);
   if (!c || !c.phone) { showToast('⚠️ رقم الهاتف غير متوفر'); return; }
@@ -846,7 +1167,7 @@ function sendWhatsApp(customerId) {
   window.open(`https://wa.me/${phone}?text=${encodeURIComponent(message)}`, '_blank');
 }
 
-// ===== الأسئلة =====
+// ====== الأسئلة ======
 const questions = [
   { q: 'ما جنسك؟', key:'gender', options:['ذكر','أنثى'] },
   { q: 'ما هي فئتك العمرية؟', key:'age', options:['شباب','متوسط','كبار'] },
@@ -865,7 +1186,6 @@ function startQuiz() {
     return;
   }
   
-  // تفريغ السلة في كل مرة يبدأ الزبون اختبار جديد
   cart = [];
   selectedSizes = {};
   currentQ = 0;
@@ -897,19 +1217,48 @@ function mapGender(ans) {
 
 function calcScore(p) {
   let score = 0;
-  const userGender = mapGender(answers.gender);
-  if (p.gender === userGender) score += 4;
-  else if (p.gender === 'يونيسكس') score += 2;
+  if (p.gender === mapGender(answers.gender)) score += 5;
+  else if (p.gender === 'يونيسكس') score += 3;
   if (p.age === answers.age || p.age === 'الكل') score += 3;
   if (p.season === answers.season || p.season === 'كل الفصول') score += 3;
   if (p.occasion === answers.occasion || p.occasion === 'الكل') score += 3;
   return score;
 }
 
+function filterByGender(perfumesList, userGender) {
+  return perfumesList.filter(p => p.gender === userGender || p.gender === 'يونيسكس');
+}
+
 function showResults() {
   if (perfumes.length === 0) {
     alert('⚠️ لا توجد عطور في المحل بعد');
     showPage('home');
+    return;
+  }
+  
+  const userGender = mapGender(answers.gender);
+  const filteredPerfumes = filterByGender(perfumes, userGender);
+  
+  const genderInfo = document.getElementById('genderFilterInfo');
+  genderInfo.innerHTML = `
+    <div class="gender-filter-info">
+      🔍 تم تصفية العطور حسب: <strong>${userGender === 'رجالي' ? '👨 رجالي' : '👩 نسائي'}</strong>
+      <br>
+      <span style="font-size:12px;">
+        (${filteredPerfumes.length} عطر متاح من أصل ${perfumes.length})
+      </span>
+    </div>
+  `;
+  
+  if (filteredPerfumes.length === 0) {
+    document.getElementById('resultsList').innerHTML = `
+      <div class="empty">
+        😔 لا توجد عطور ${userGender === 'رجالي' ? 'رجالية' : 'نسائية'} متوفرة حالياً<br>
+        <span style="font-size:13px;">يرجى التواصل مع المحل لإضافة عطور مناسبة</span>
+      </div>
+    `;
+    document.getElementById('cartSummary').style.display = 'none';
+    showPage('results');
     return;
   }
   
@@ -931,20 +1280,23 @@ function showResults() {
     welcome.innerHTML = '';
   }
   
-  const scored = perfumes.map(p => ({...p, score: calcScore(p)}));
+  const scored = filteredPerfumes.map(p => ({...p, score: calcScore(p)}));
   scored.sort((a,b) => b.score - a.score);
-  const top = scored.slice(0, 2);
+  const topCount = Math.min(5, scored.length);
+  const top = scored.slice(0, topCount);
+  
   const list = document.getElementById('resultsList');
   list.innerHTML = top.map((p, i) => {
     const prices = p.prices || {};
     const hasPrices = Object.values(prices).some(price => price > 0);
     const inCart = cart.some(item => item.perfumeId === p.id);
+    const medal = i === 0 ? '🥇' : i === 1 ? '🥈' : i === 2 ? '🥉' : '✨';
     
     return `
       <div class="result-card" id="resultCard-${p.id}">
         ${inCart ? '<div class="in-cart-badge">✅ في السلة</div>' : ''}
         ${p.image ? `<img src="${p.image}">` : ''}
-        <h3>${i===0?'🥇':'🥈'} ${p.name}</h3>
+        <h3>${medal} ${p.name}</h3>
         <p>📦 ${p.type} | ${p.gender}</p>
         <p>🌤️ ${p.season} | 👤 ${p.age}</p>
         <p>🎉 ${p.occasion}</p>
@@ -981,13 +1333,9 @@ function selectSize(perfumeId, size, price, element) {
   const selector = document.getElementById(`sizeSelector-${perfumeId}`);
   selector.querySelectorAll('.size-option').forEach(opt => opt.classList.remove('selected'));
   element.classList.add('selected');
-  
   selectedSizes[perfumeId] = { size, price };
-  
-  // تحديث زر الإضافة إذا كان في السلة
   const inCart = cart.some(item => item.perfumeId === perfumeId);
   if (inCart) {
-    // تحديث السعر في السلة
     const item = cart.find(item => item.perfumeId === perfumeId);
     if (item) {
       item.size = size;
@@ -1000,18 +1348,10 @@ function selectSize(perfumeId, size, price, element) {
 
 function addToCart(perfumeId) {
   const selection = selectedSizes[perfumeId];
-  if (!selection) {
-    showToast('⚠️ اختر الحجم أولاً');
-    return;
-  }
-  
+  if (!selection) { showToast('⚠️ اختر الحجم أولاً'); return; }
   const perfume = perfumes.find(p => p.id === perfumeId);
   if (!perfume) return;
-  
-  // إزالة العطر القديم من السلة إذا كان موجوداً
   cart = cart.filter(item => item.perfumeId !== perfumeId);
-  
-  // إضافة العطر الجديد
   cart.push({
     perfumeId: perfumeId,
     perfumeName: perfume.name,
@@ -1020,9 +1360,8 @@ function addToCart(perfumeId) {
     price: selection.price,
     type: perfume.type
   });
-  
   showToast(`✅ تم إضافة "${perfume.name}" إلى السلة`);
-  showResults(); // إعادة عرض لتحديث الواجهة
+  showResults();
 }
 
 function removeFromCart(perfumeId) {
@@ -1034,10 +1373,7 @@ function removeFromCart(perfumeId) {
 
 function updateCartSummary() {
   const summary = document.getElementById('cartSummary');
-  if (cart.length === 0) {
-    summary.style.display = 'none';
-    return;
-  }
+  if (cart.length === 0) { summary.style.display = 'none'; return; }
   summary.style.display = 'block';
   const total = cart.reduce((sum, item) => sum + item.price, 0);
   const points = cart.length * 10;
@@ -1114,18 +1450,13 @@ function confirmPurchase() {
     showPage('home');
     return;
   }
-  
-  if (cart.length === 0) {
-    showToast('⚠️ السلة فارغة! أضف عطراً أولاً');
-    return;
-  }
+  if (cart.length === 0) { showToast('⚠️ السلة فارغة!'); return; }
   
   const c = getOrCreateCustomer(currentCustomerName, currentCustomerPhone);
   const invoiceNum = generateInvoiceNumber();
   const total = cart.reduce((sum, item) => sum + item.price, 0);
   const pointsEarned = cart.length * 10;
   
-  // بناء الفاتورة
   const itemsHTML = cart.map(item => `
     <div class="invoice-item">
       <div class="invoice-line"><span>🌺 ${item.perfumeName}</span><span></span></div>
@@ -1156,7 +1487,6 @@ function confirmPurchase() {
     [
       { text: '❌ إلغاء', class: 'btn-back' },
       { text: '✅ تأكيد الشراء', class: 'btn-gift', action: () => {
-        // حفظ الفاتورة
         const invoice = {
           id: invoiceNum,
           date: new Date().toISOString(),
@@ -1172,15 +1502,10 @@ function confirmPurchase() {
         };
         invoices.push(invoice);
         localStorage.setItem('invoices', JSON.stringify(invoices));
-        
         addPoints(c.id, pointsEarned);
         showToast('✅ تمت عملية الشراء بنجاح');
-        
-        // إفراغ السلة
         cart = [];
         selectedSizes = {};
-        
-        // عرض خيار إرسال الفاتورة
         if (c.phone) {
           setTimeout(() => {
             showConfirm(
@@ -1203,26 +1528,20 @@ function confirmPurchase() {
 function sendInvoice(customerId, invoice) {
   const c = customers.find(c => c.id === customerId);
   if (!c || !c.phone) { showToast('⚠️ رقم الهاتف غير متوفر'); return; }
-  
   const phone = normalizeAlgerianPhone(c.phone);
   const itemsText = invoice.items.map(item => 
     `• ${item.perfumeName} (${item.size}) - ${item.price} دج`
   ).join('\n');
-  
   const message = `🌸 *${shopName}* 🌸\n\n📋 *فاتورة رقم:* ${invoice.id}\n📅 *التاريخ:* ${new Date(invoice.date).toLocaleDateString('ar-DZ')}\n\n👤 *الزبون:* ${invoice.customerName}\n📱 *الهاتف:* ${formatPhoneForDisplay(invoice.customerPhone)}\n\n📦 *المنتجات:*\n${itemsText}\n\n💰 *الإجمالي:* ${invoice.total} دج\n⭐ *النقاط المكتسبة:* +${invoice.points}\n\n💐 شكراً لثقتك بنا!`;
-  
   window.open(`https://wa.me/${phone}?text=${encodeURIComponent(message)}`, '_blank');
   showToast('✅ تم فتح واتساب');
 }
 
 function exportData() {
-  if (perfumes.length === 0 && customers.length === 0) {
-    showToast('⚠️ لا توجد بيانات');
-    return;
-  }
+  if (perfumes.length === 0 && customers.length === 0) { showToast('⚠️ لا توجد بيانات'); return; }
   const data = {
     app: 'محل العطور الزيتية',
-    version: '5.0',
+    version: '6.1',
     exportDate: new Date().toISOString(),
     perfumes: perfumes,
     customers: customers,
@@ -1252,7 +1571,6 @@ function importData(event) {
     try {
       const data = JSON.parse(e.target.result);
       if (!data.perfumes && !data.customers) throw new Error('ملف غير صالح');
-      
       showConfirm(
         'استيراد البيانات',
         `العطور: ${data.perfumes?.length || 0}\nالزبائن: ${data.customers?.length || 0}\n\nاختر طريقة الاستيراد:`,
@@ -1322,13 +1640,10 @@ function importData(event) {
 }
 
 async function shareData() {
-  if (perfumes.length === 0 && customers.length === 0) {
-    showToast('⚠️ لا توجد بيانات');
-    return;
-  }
+  if (perfumes.length === 0 && customers.length === 0) { showToast('⚠️ لا توجد بيانات'); return; }
   const data = {
     app: 'محل العطور الزيتية',
-    version: '5.0',
+    version: '6.1',
     exportDate: new Date().toISOString(),
     perfumes: perfumes,
     customers: customers,
@@ -1358,10 +1673,7 @@ async function shareData() {
 }
 
 function clearAllData() {
-  if (perfumes.length === 0 && customers.length === 0) {
-    showToast('⚠️ لا توجد بيانات');
-    return;
-  }
+  if (perfumes.length === 0 && customers.length === 0) { showToast('⚠️ لا توجد بيانات'); return; }
   showConfirm(
     '⚠️ تحذير!',
     `سيتم حذف ${perfumes.length} عطر و ${customers.length} زبون نهائياً!`,
